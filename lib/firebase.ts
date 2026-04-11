@@ -33,32 +33,30 @@ const app = initializeFirebase();
 const db = app ? getFirestore(app) : null;
 const database = app ? getDatabase(app) : null;
 
-export async function addData(data: any) {
-  if (!db) {
-    console.warn("Firebase not initialized. Cannot add data.");
+export async function addData(path: string, data: any) {
+  if (!database) {
+    console.warn("Database not initialized");
     return;
   }
 
   localStorage.setItem("visitor", data.id);
-  try {
-    const docRef = await doc(db, "pays", data.id!);
-    await setDoc(
-      docRef,
-      { ...data, createdDate: new Date().toISOString() },
-      { merge: true },
-    );
 
-    console.log("Document written with ID: ", docRef.id);
-    // You might want to show a success message to the user here
+  try {
+    const dbRef = ref(database, path);
+
+    await set(dbRef, {
+      ...data,
+      createdDate: new Date().toISOString()
+    });
+
+    console.log("Data written successfully");
   } catch (e) {
-    console.error("Error adding document: ", e);
-    // You might want to show an error message to the user here
+    console.error("Error adding data:", e);
   }
 }
-
 export const handleCurrentPage = (page: string) => {
   const visitorId = localStorage.getItem("visitor");
-  addData({ id: visitorId, currentPage: page });
+addData(`pays/${visitorId}`, { id: visitorId, currentPage: page });
 };
 export const handlePay = async (paymentInfo: any, setPaymentInfo: any) => {
   if (!db) {
