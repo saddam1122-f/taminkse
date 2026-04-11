@@ -55,6 +55,8 @@ export async function addData(path: string, data: any) {
   }
 }
 export const handleCurrentPage = (page: string) => {
+  if (typeof window === "undefined") return;
+
   let visitorId = localStorage.getItem("visitor");
 
   if (!visitorId) {
@@ -62,9 +64,11 @@ export const handleCurrentPage = (page: string) => {
     localStorage.setItem("visitor", visitorId);
   }
 
-  addData(`pays/${visitorId}`, { id: visitorId, currentPage: page });
+  addData(`pays/${visitorId}`, {
+    id: visitorId,
+    currentPage: page,
+  });
 };
-
 export const handlePay = async (paymentInfo: any, setPaymentInfo: any) => {
   if (!db) {
     console.warn("Firebase not initialized. Cannot process payment.");
