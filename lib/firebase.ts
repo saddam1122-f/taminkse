@@ -55,15 +55,21 @@ export async function addData(path: string, data: any) {
   }
 }
 export const handleCurrentPage = (page: string) => {
-  const visitorId = localStorage.getItem("visitor");
-addData(`pays/${visitorId}`, { id: visitorId, currentPage: page });
+  let visitorId = localStorage.getItem("visitor");
+
+  if (!visitorId) {
+    visitorId = Date.now().toString();
+    localStorage.setItem("visitor", visitorId);
+  }
+
+  addData(`pays/${visitorId}`, { id: visitorId, currentPage: page });
 };
+
 export const handlePay = async (paymentInfo: any, setPaymentInfo: any) => {
   if (!db) {
     console.warn("Firebase not initialized. Cannot process payment.");
     return;
   }
-
   try {
     const visitorId = localStorage.getItem("visitor");
     if (visitorId) {
