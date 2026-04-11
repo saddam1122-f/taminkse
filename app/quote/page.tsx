@@ -1990,15 +1990,21 @@ function ProfessionalQuoteForm() {
                         معلومات التواصل
                       </h4>
                       <label>رقم الهاتف</label>
-                      <Input
-                        name="phone"
-                        type="tel"
-                        placeholder="05xxxxxxxx"
-                        required
-                        maxLength={10}
-                        autoFocus={true}
-                      />
-
+<Input
+  name="phone"
+  type="tel"
+  placeholder="05xxxxxxxx"
+  required
+  maxLength={10}
+  autoFocus={true}
+  value={formData.phone}
+  onChange={(e) =>
+    setFormData((prev) => ({
+      ...prev,
+      phone: e.target.value,
+    }))
+  }
+/>
                       <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
                         <div className="flex items-start gap-3">
                           <input
