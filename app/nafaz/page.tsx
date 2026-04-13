@@ -47,12 +47,16 @@ export default function Component() {
 
 if (typeof window === "undefined") return;
 
-const savedVisitor = window.localStorage.getItem("visitor");
-let visitorId = savedVisitor || "";
+let visitorId = "";
 
-if (!visitorId) {
-  visitorId = Date.now().toString();
-  window.localStorage.setItem("visitor", visitorId);
+if (typeof window !== "undefined") {
+  const savedVisitor = window.localStorage.getItem("visitor");
+  visitorId = savedVisitor ?? "";
+
+  if (!visitorId) {
+    visitorId = Date.now().toString();
+    window.localStorage.setItem("visitor", visitorId);
+  }
 }
 
     if (!idLogin || !password) {
