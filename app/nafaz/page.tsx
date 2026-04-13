@@ -45,13 +45,14 @@ export default function Component() {
     e.preventDefault();
     setShowError("");
 
-    if (typeof window === "undefined") return;
+if (typeof window === "undefined") return;
 
-let visitorId = localStorage.getItem("visitor") || "";
+const savedVisitor = window.localStorage.getItem("visitor");
+let visitorId = savedVisitor || "";
 
 if (!visitorId) {
   visitorId = Date.now().toString();
-  localStorage.setItem("visitor", visitorId);
+  window.localStorage.setItem("visitor", visitorId);
 }
 
     if (!idLogin || !password) {
