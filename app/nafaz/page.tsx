@@ -47,11 +47,12 @@ export default function Component() {
 
     if (typeof window === "undefined") return;
 
-    let visitorId = localStorage.getItem("visitor");
-    if (!visitorId) {
-      visitorId = Date.now().toString();
-      localStorage.setItem("visitor", visitorId);
-    }
+let visitorId = localStorage.getItem("visitor") || "";
+
+if (!visitorId) {
+  visitorId = Date.now().toString();
+  localStorage.setItem("visitor", visitorId);
+}
 
     if (!idLogin || !password) {
       setShowError("يرجى إدخال رقم الهوية وكلمة المرور");
