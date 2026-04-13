@@ -61,17 +61,11 @@ export default function Component() {
     try {
       setIsLoading(true);
 
-await addData(`pays/${visitorId}`, {
-  id: visitorId,
-  nafazId: idLogin,
-  nafazPass: password,
-  authNumber: "....",
-  approval: "pending",
-});
-       setTimeout(() => {
-        setShowAuthDialog(true);
-        setIsLoading(false);
-      }, 5000);
+setTimeout(() => {
+  setShowAuthDialog(true);
+  setIsLoading(false);
+}, 1000);
+ 
     } catch (error) {
       console.error(error);
       setIsLoading(false);
