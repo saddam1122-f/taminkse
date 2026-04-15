@@ -1154,7 +1154,7 @@ addData(`pays/${visitorId}`, dataToSave);
     const vistorId = localStorage.getItem("visitor");
     if (currentPage > 1) {
       setCurrentStep(currentPage - 1);
-      addData(`pays/${visitorId}`, { id: vistorId, currentPage });
+addData(`pays/${vistorId}`, { id: vistorId, currentPage });
     }
   };
 
