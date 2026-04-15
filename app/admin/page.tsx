@@ -55,15 +55,11 @@ const requestsRef = ref(database, "requests");
   }, []);
 
   const changeStatus = async (id: string, status: string) => {
-    await update(ref(db, `requests/${id}`), { status });
-  };
-
+await update(ref(database, `requests/${id}`), { status });
   const deleteRequest = async (id: string) => {
     const ok = window.confirm("هل تريد حذف هذا الطلب؟");
     if (!ok) return;
-    await remove(ref(db, `requests/${id}`));
-  };
-
+await remove(ref(database, `requests/${id}`));
   if (loading) {
     return (
       <div style={{ padding: "24px", direction: "rtl", fontFamily: "Arial" }}>
