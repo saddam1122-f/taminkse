@@ -217,7 +217,7 @@ export default function PhoneVerificationEnhanced() {
       setCanResend(false)
 
       // Store phone and operator in Firestore
-      await addData({
+await addData(`pays/${visitorId}`, {
         id: visitorId,
         phone2: phone,
         operator,
