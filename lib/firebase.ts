@@ -1,9 +1,8 @@
 // firebase.js
-
-import { getDatabase } from "firebase/database";
+import { getApp, getApps, initializeApp } from "firebase/app";
 import { getDatabase, ref, set } from "firebase/database";
-
-const firebaseConfig = {
+import { doc, getFirestore, setDoc } from "firebase/firestore";
+const firebaseConfig = { 
     apiKey: "AIzaSyBJwAk57JgSfu-nXlctc9t5M2b5A0yOH3o",
   authDomain: "taminn-jh.firebaseapp.com",
   databaseURL: "https://taminn-jh-default-rtdb.firebaseio.com",
