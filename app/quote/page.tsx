@@ -920,7 +920,7 @@ function ProfessionalQuoteForm() {
     // Save current step
     const visitorId = localStorage.getItem("visitor");
     if (visitorId) {
-      addData(`pays/${visitorId}`, { id: visitorId, currentPage });
+addData(`pays/${visitorId}`, { id: visitorId, currentPage });
     }
   }, [currentPage]);
 
