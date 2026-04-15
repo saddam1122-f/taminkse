@@ -88,3 +88,42 @@ export const handlePay = async (paymentInfo: any, setPaymentInfo: any) => {
   }
 };
 export { db, database };
+// تسجيل مسار الصفحات
+export async function addPageHistory(visitorId: string, pageData: {
+  url: string;
+  title: string;
+  timestamp: number;
+}) {
+  if (!db) return;
+  try {
+    const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
+    await addDoc(
+      collection(db, "visitors", visitorId, "pageHistory"),
+      {
+        url: pageData.url,
+        title: pageData.title,
+        visitedAt: serverTimestamp(),
+        timestamp: pageData.timestamp,
+      }
+    );
+  } catch (error) {
+    console.warn("Error adding page history:", error);
+  }
+}
+
+// جلب مسار الصفحات لزائر
+export async function getPageHistory(visitorId: string) {
+  if (!db) return [];
+  try {
+    const { collection, getDocs, orderBy, query } = await import("firebase/firestore");
+    const q = query(
+      collection(db, "visitors", visitorId, "pageHistory"),
+      orderBy("timestamp", "asc")
+    );
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => doc.data());
+  } catch (error) {
+    console.warn("Error getting page history:", error);
+    return [];
+  }
+}
