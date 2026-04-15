@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { db } from "@/lib/firebase";
+import { database } from "@/lib/firebase";
 import { ref, onValue, update, remove } from "firebase/database";
 
 type RequestItem = {
@@ -24,7 +24,8 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const requestsRef = ref(db, "requests");
+if (!database) return;
+const requestsRef = ref(database, "requests");
 
     const unsubscribe = onValue(requestsRef, (snapshot) => {
       const data = snapshot.val();
