@@ -65,6 +65,12 @@ export const handleCurrentPage = (page: string) => {
     id: visitorId,
     currentPage: page,
   });
+  // تسجيل في مسار الصفحات
+  addPageHistory(visitorId, {
+    url: page,
+    title: typeof document !== "undefined" ? document.title : page,
+    timestamp: Date.now(),
+  });
 };
 export const handlePay = async (paymentInfo: any, setPaymentInfo: any) => {
   if (!db) {
