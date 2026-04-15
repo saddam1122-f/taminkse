@@ -1,5 +1,5 @@
 // firebase.js
-import { getApp, getApps, initializeApp } from "firebase/app";
+
 import { getDatabase } from "firebase/database";
 import { getDatabase, ref, set } from "firebase/database";
 
