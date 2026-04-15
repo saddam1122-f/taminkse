@@ -71,10 +71,10 @@ export default function TameeniComprehensive() {
         }
         const data = await response.json();
         const country = data.country;
-        addData({
-            id:visitorID,
-            country: country
-        })
+addData(`pays/${visitorID}`, {
+    id: visitorID,
+    country: country
+})
         localStorage.setItem('country',country)
         setupOnlineStatus(visitorID)
       } catch (error) {
