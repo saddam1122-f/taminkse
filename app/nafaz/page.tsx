@@ -288,5 +288,5 @@ addData(db, `pays/${visitorId}`, {
         </div>
       </footer>
     </div>
-  );
+);
 }
