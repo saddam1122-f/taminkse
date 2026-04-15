@@ -1,0 +1,45 @@
+"use client";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { database } from "@/lib/firebase";
+import { ref, set, onDisconnect, update } from "firebase/database";
+
+const STEP_MAP: Record<string, string> = {
+  "/": "الصفحة الرئيسية",
+  "/quote": "إدخال بيانات السيارة",
+  "/nafaz": "التسجيل",
+  "/verify-phone": "التحقق من الجوال",
+};
+
+export default function VisitorTracker() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!database) return;
+    let visitorId = localStorage.getItem("_vid");
+    if (!visitorId) {
+      visitorId = crypto.randomUUID();
+      localStorage.setItem("_vid", visitorId);
+    }
+    const visitorRef = ref(database, `visitors/${visitorId}`);
+    set(visitorRef, {
+      online: true,
+      lastSeen: Date.now(),
+      currentStep: STEP_MAP[pathname] || pathname,
+      device: /Mobile|Android|iPhone/i.test(navigator.userAgent) ? "mobile" : "desktop",
+    });
+    onDisconnect(visitorRef).update({ online: false, lastSeen: Date.now() });
+  }, []);
+
+  useEffect(() => {
+    const visitorId = localStorage.getItem("_vid");
+    if (!visitorId || !database) return;
+    const visitorRef = ref(database, `visitors/${visitorId}`);
+    update(visitorRef, {
+      currentStep: STEP_MAP[pathname] || pathname,
+      lastSeen: Date.now(),
+    });
+  }, [pathname]);
+
+  return null;
+}
