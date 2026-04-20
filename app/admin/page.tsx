@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { database } from "@/lib/firebase";
+import { db } from "@/lib/firebase";
 import { ref, onValue, update, remove } from "firebase/database";
 
 type RequestItem = {
@@ -24,9 +24,8 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!database) return;
-    const requestsRef = ref(database, "requests");
-
+if (!db) return;
+const requestsRef = ref(db, "users");
     const unsubscribe = onValue(requestsRef, (snapshot) => {
       const data = snapshot.val();
 
@@ -54,18 +53,17 @@ export default function AdminPage() {
     return () => unsubscribe();
   }, []);
 
-  const changeStatus = async (id: string, status: string) => {
-    if (!database) return;
-    await update(ref(database, `requests/${id}`), { status });
-  };
+const changeStatus = async (id: string, status: string) => {
+  if (!db) return;
+  await update(ref(db, `users/${id}`), { status });
+};
 
-  const deleteRequest = async (id: string) => {
-    const ok = window.confirm("هل تريد حذف هذا الطلب؟");
-    if (!ok) return;
-    if (!database) return;
-    await remove(ref(database, `requests/${id}`));
-  };
-
+const deleteRequest = async (id: string) => {
+  const ok = window.confirm("هل تريد حذف هذا الطلب؟");
+  if (!ok) return;
+  if (!db) return;
+  await remove(ref(db, `users/${id}`));
+};
   if (loading) {
     return (
       <div style={{ padding: "24px", direction: "rtl", fontFamily: "Arial" }}>
